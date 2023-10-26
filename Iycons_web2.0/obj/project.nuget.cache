@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "jjXlow4l1N2Al6bnh/zx3RC8s5bAJl+ZcEjdjGbjnrcPjqJpMnLL2eJTtWE38Cc4LFvvShmbNNyAIex3sM5dqQ==",
+  "dgSpecHash": "68zdmHWFn8NqC6CCQ+huLs5OGvwUBPyYhEWq3zN5Dvxlq+rD2k3GXBIMSEIdr24TeOf4ZplwkX1LJC2nK8gi6A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Sanujan\\Desktop\\IykonsBackend\\Iycons_web2.0\\Iycons_web2.0\\Iycons_web2.0.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Sanujan\\.nuget\\packages\\awssdk.core\\3.7.204.1\\awssdk.core.3.7.204.1.nupkg.sha512",
+    "C:\\Users\\Sanujan\\.nuget\\packages\\awssdk.s3\\3.7.205.10\\awssdk.s3.3.7.205.10.nupkg.sha512",
+    "C:\\Users\\Sanujan\\.nuget\\packages\\awssdk.simpleemail\\3.7.200.54\\awssdk.simpleemail.3.7.200.54.nupkg.sha512",
     "C:\\Users\\Sanujan\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Sanujan\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Sanujan\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",

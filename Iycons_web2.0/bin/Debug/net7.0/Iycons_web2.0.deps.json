@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v7.0": {
       "Iycons_web2.0/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "3.7.205.10",
+          "AWSSDK.SimpleEmail": "3.7.200.54",
           "BCrypt.Net-Next": "4.0.3",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.11",
           "Microsoft.AspNetCore.Mvc.Cors": "2.2.0",
@@ -18,6 +20,36 @@
         },
         "runtime": {
           "Iycons_web2.0.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.204.1": {
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.204.1"
+          }
+        }
+      },
+      "AWSSDK.S3/3.7.205.10": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.204.1"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.S3.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.205.10"
+          }
+        }
+      },
+      "AWSSDK.SimpleEmail/3.7.200.54": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.204.1"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.SimpleEmail.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.200.54"
+          }
         }
       },
       "Azure.Core/1.25.0": {
@@ -783,6 +815,27 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/3.7.204.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3QE4yFkJ8DlPPp7sm+uEUjiTecGxquVKjNw3LkRFyPkMHXIJApWJZ53FzGRyBpGhkqM0mmqtRnJw0UriGGN4CA==",
+      "path": "awssdk.core/3.7.204.1",
+      "hashPath": "awssdk.core.3.7.204.1.nupkg.sha512"
+    },
+    "AWSSDK.S3/3.7.205.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9GktXsvG6RnWsmKcQvKSz9QIUpop4yjeBVRYT81heZMGe/DAlvgHDo7iNYTspZnfcwmI5L3VT++m5A1d7oeZrQ==",
+      "path": "awssdk.s3/3.7.205.10",
+      "hashPath": "awssdk.s3.3.7.205.10.nupkg.sha512"
+    },
+    "AWSSDK.SimpleEmail/3.7.200.54": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-F0uF8EFyxSOEHO2dXz+kCn861Ktq3nP9djacBXclJfxaAyy1GHt2vttiwpwbjnxzv9TWGU8NkcZru/bn5xX4pw==",
+      "path": "awssdk.simpleemail/3.7.200.54",
+      "hashPath": "awssdk.simpleemail.3.7.200.54.nupkg.sha512"
     },
     "Azure.Core/1.25.0": {
       "type": "package",

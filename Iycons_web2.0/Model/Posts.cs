@@ -18,7 +18,7 @@ namespace Iycons_web2._0.Model
                 return User?.UserName;
             }
         }
-        public string CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } 
         public ICollection<PostTag> PostTags { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Media> MediaItems { get; set; }
@@ -28,5 +28,10 @@ namespace Iycons_web2._0.Model
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
+        public Posts()
+        {
+            // Set the CreateDate property to the current date and time when a new Post is created.
+            CreateDate = DateTime.Now;
+        }
     }
 }

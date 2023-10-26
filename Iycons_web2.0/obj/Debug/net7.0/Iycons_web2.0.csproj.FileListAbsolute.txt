@@ -75,3 +75,6 @@ C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\obj\Debug\net
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\obj\Debug\net7.0\Iycons_web2.0.pdb
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\obj\Debug\net7.0\Iycons_web2.0.genruntimeconfig.cache
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\obj\Debug\net7.0\ref\Iycons_web2.0.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\AWSSDK.Core.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\AWSSDK.S3.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\AWSSDK.SimpleEmail.dll

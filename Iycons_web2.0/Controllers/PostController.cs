@@ -3,10 +3,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Iycons_web2._0.Model;
+using Microsoft.AspNetCore.Authorization;
+using Azure.Core;
+using Microsoft.Extensions.Hosting;
+using Iycons_web2._0.DTO;
+
 namespace Iycons_web2._0.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class PostController : ControllerBase
     {
         private readonly Context _context;
@@ -35,13 +41,25 @@ namespace Iycons_web2._0.Controllers
             return post;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Posts>> CreatePost(Posts post)
+        [HttpPost("create-post")]
+        
+        public async Task<ActionResult<Posts>> CreatePost(PostDto post)
         {
-            _context.Posts.Add(post);
-            await _context.SaveChangesAsync();
+           
+            var posts = new Posts
+            {
+                Title = post.Title,
+                Description = post.Description,
+                
+                // Associate the post with the user
+            };
 
-            return CreatedAtAction(nameof(GetPost), new { id = post.PostId }, post);
+            // Save the post to the database.
+            _context.Posts.Add(posts);
+            _context.SaveChanges();
+
+            // Return the created post or a success message.
+            return Ok(posts);
         }
 
         [HttpPut("{id}")]
