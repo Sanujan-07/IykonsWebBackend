@@ -1,4 +1,5 @@
 ﻿using Iycons_web2._0.Data;
+using Iycons_web2._0.DTO;
 using Iycons_web2._0.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,12 +41,19 @@ namespace Iycons_web2._0.Controllers
 
         // POST: api/Comment
         [HttpPost]
-        public async Task<ActionResult<Comment>> CreateComment(Comment comment)
+        public async Task<ActionResult<Comment>> CreateComment(CommentDto commentDto)
         {
+            var comment = new Comment
+            {
+                CommandText = commentDto.CommandText,
+                Commenddate = commentDto.Commenddate,
+
+            };
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetComment), new { id = comment.CommentId }, comment);
+            return Ok(comment);
+
         }
 
         // PUT: api/Comment/5

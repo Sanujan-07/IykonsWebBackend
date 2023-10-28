@@ -1,4 +1,6 @@
-﻿using Iycons_web2._0.Data;
+﻿using Amazon.S3.Model;
+using Iycons_web2._0.Data;
+using Iycons_web2._0.DTO;
 using Iycons_web2._0.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +23,14 @@ namespace Iycons_web2._0.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Media>>> GetMedia()
         {
-            return await _context.Images.ToListAsync();
+            return await _context.Medias.ToListAsync();
         }
 
         // GET: api/Media/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Media>> GetMedia(int id)
         {
-            var media = await _context.Images.FindAsync(id);
+            var media = await _context.Medias.FindAsync(id);
 
             if (media == null)
             {
@@ -40,12 +42,18 @@ namespace Iycons_web2._0.Controllers
 
         // POST: api/Media
         [HttpPost]
-        public async Task<ActionResult<Media>> CreateMedia(Media media)
+        public async Task<ActionResult<Media>> CreateMedia(MediaDto mediaDto)
         {
-            _context.Images.Add(media);
+            var media = new Media
+            {
+                Filname = mediaDto.Filname,
+                Path_Name = mediaDto.Path_Name
+
+            };
+            _context.Medias.Add(media);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetMedia), new { id = media.ImageId }, media);
+            return Ok(media);
         }
 
         // PUT: api/Media/5
@@ -82,13 +90,13 @@ namespace Iycons_web2._0.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedia(int id)
         {
-            var media = await _context.Images.FindAsync(id);
+            var media = await _context.Medias.FindAsync(id);
             if (media == null)
             {
                 return NotFound();
             }
 
-            _context.Images.Remove(media);
+            _context.Medias.Remove(media);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -96,7 +104,7 @@ namespace Iycons_web2._0.Controllers
 
         private bool MediaExists(int id)
         {
-            return _context.Images.Any(e => e.ImageId == id);
+            return _context.Medias.Any(e => e.ImageId == id);
         }
     }
 }

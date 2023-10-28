@@ -2,5 +2,7 @@
 {
     public class CommentDto
     {
+        public string? Commenddate { get; set; }
+        public string? CommandText { get; set; }
     }
 }

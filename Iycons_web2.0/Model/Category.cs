@@ -9,8 +9,8 @@ namespace Iycons_web2._0.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public Posts Post { get; set; }
+        public string? CategoryName { get; set; }
+        public ICollection<Posts> Posts { get; set; }
 
     }
 }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Iycons_web2._0.Data; // Include your data context namespace
 using Iycons_web2._0.Model;
 using Iycons_web2._0.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/[controller]")]
 [ApiController]
+[AllowAnonymous]
 public class FeedbackController : ControllerBase
 {
     private readonly Context _context;
@@ -41,7 +43,7 @@ public class FeedbackController : ControllerBase
 
     // POST: api/Feedback
     [HttpPost]
-    public async Task<ActionResult<Feedback>> PostFeedback(Feedback feedbackDto)
+    public async Task<ActionResult<Feedback>> PostFeedback(FeedbackDto feedbackDto)
     {
         var feedback = new Feedback
         {

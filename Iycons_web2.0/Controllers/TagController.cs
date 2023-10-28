@@ -1,4 +1,5 @@
 ﻿using Iycons_web2._0.Data;
+using Iycons_web2._0.DTO;
 using Iycons_web2._0.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,12 +54,18 @@ namespace Iycons_web2._0.Controllers
 
         // POST: api/Tag
         [HttpPost]
-        public async Task<ActionResult<Tag>> CreateTag(Tag tag)
+        public async Task<ActionResult<Tag>> CreateTag(TagDto tagDto)
         {
+            var tag = new Tag
+            {
+               TagName=tagDto.TagName
+
+            };
+
             _context.Tags.Add(tag);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTag), new { id = tag.TagId }, tag);
+            return Ok(tag);
         }
 
         // PUT: api/Tag/5

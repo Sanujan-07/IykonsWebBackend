@@ -43,23 +43,31 @@ namespace Iycons_web2._0.Controllers
 
         [HttpPost("create-post")]
         
-        public async Task<ActionResult<Posts>> CreatePost(PostDto post)
+        public async Task<ActionResult<Posts>> CreatePost(int categoryId,PostDto post)
         {
-           
-            var posts = new Posts
+            var category = await _context.Categories.FindAsync(categoryId);
+            
+
+            if (category != null)
             {
-                Title = post.Title,
-                Description = post.Description,
-                
-                // Associate the post with the user
-            };
+                var newPost = new Posts
+                {
+                    Title = post.Title,
+                    Description = post.Description,
+                    Category = category,
+                   
+                };
 
-            // Save the post to the database.
-            _context.Posts.Add(posts);
-            _context.SaveChanges();
+                _context.Posts.Add(newPost);
+                await _context.SaveChangesAsync();
 
-            // Return the created post or a success message.
-            return Ok(posts);
+                return Ok(newPost);
+            }
+            else
+            {
+                return NotFound("Category not found"); // Handle the case where the specified categoryId doesn't exist
+            }
+
         }
 
         [HttpPut("{id}")]

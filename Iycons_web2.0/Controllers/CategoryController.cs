@@ -1,4 +1,5 @@
 ﻿using Iycons_web2._0.Data;
+using Iycons_web2._0.DTO;
 using Iycons_web2._0.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,12 +41,19 @@ namespace Iycons_web2._0.Controllers
 
         // POST: api/Category
         [HttpPost]
-        public async Task<ActionResult<Category>> CreateCategory(Category category)
+        public async Task<ActionResult<Category>> CreateCategory(CategoryDto categorydto)
         {
-            _context.Categories.Add(category);
+            var category = new Category
+            {
+                CategoryName = categorydto.CategoryName
+
+
+            };
+
+            _context.Categories.Add(category );
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCategory), new { id = category.CategoryId }, category);
+            return Ok(category);
         }
 
         // PUT: api/Category/5
