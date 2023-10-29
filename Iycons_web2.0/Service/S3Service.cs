@@ -41,7 +41,7 @@ namespace Iycons_web2._0.Service
                 // Create a Media object to store in the database
                 var media = new Media
                 {
-                    Path_Name = s3ObjectUrl
+                    FilePath = s3ObjectUrl
                 };
 
                 return media;

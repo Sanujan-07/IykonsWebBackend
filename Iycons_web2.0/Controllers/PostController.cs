@@ -1,12 +1,11 @@
 ﻿using Iycons_web2._0.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Iycons_web2._0.Model;
 using Microsoft.AspNetCore.Authorization;
-using Azure.Core;
-using Microsoft.Extensions.Hosting;
 using Iycons_web2._0.DTO;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Iycons_web2._0.Controllers
 {
@@ -16,10 +15,13 @@ namespace Iycons_web2._0.Controllers
     public class PostController : ControllerBase
     {
         private readonly Context _context;
-
-        public PostController(Context context)
+       
+       
+        public PostController(Context context )
         {
             _context = context;
+         
+            
         }
 
         [HttpGet]
@@ -45,27 +47,35 @@ namespace Iycons_web2._0.Controllers
         
         public async Task<ActionResult<Posts>> CreatePost(int categoryId,PostDto post)
         {
-            var category = await _context.Categories.FindAsync(categoryId);
-            
-
-            if (category != null)
+            try
             {
-                var newPost = new Posts
+                var category = await _context.Categories.FindAsync(categoryId);
+
+                if (category != null)
                 {
-                    Title = post.Title,
-                    Description = post.Description,
-                    Category = category,
-                   
-                };
+                    var newPost = new Posts
+                    {
+                        Title = post.Title,
+                        Description = post.Description,
+                        CategoryId = category.CategoryId, // Set the foreign key property
+                    };
 
-                _context.Posts.Add(newPost);
-                await _context.SaveChangesAsync();
+                    _context.Posts.Add(newPost);
+                    await _context.SaveChangesAsync();
 
-                return Ok(newPost);
+                    return Ok(newPost);
+                }
+                else
+                {
+                    // Return a 404 (Not Found) response with a specific message
+                    return NotFound("Category not found");
+                }
             }
-            else
+           
+            catch (Exception ex)
             {
-                return NotFound("Category not found"); // Handle the case where the specified categoryId doesn't exist
+                // Handle other exceptions if needed
+                return StatusCode(500, "Internal Server Error");
             }
 
         }

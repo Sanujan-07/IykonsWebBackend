@@ -11,8 +11,8 @@ namespace Iycons_web2._0.Model
         public int CommentId { get; set; }
         public string? Commenddate { get; set; }
         public string? CommandText { get; set; }
-       
-        public Posts Posts { get; set; }
+       public int PostId { get; set; }
+        public virtual Posts Posts { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
 using Iycons_web2._0.Data;
 using Iycons_web2._0.DTO;
 using Iycons_web2._0.Model;
+using Iycons_web2._0.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,11 @@ namespace Iycons_web2._0.Controllers
     public class MediaController : ControllerBase
     {
         private readonly Context _context;
-
-        public MediaController(Context context)
+        private readonly ImageStorageService _imageStorageService;
+        public MediaController(Context context, ImageStorageService imageStorageService)
         {
             _context = context;
+            _imageStorageService = imageStorageService;
         }
 
         // GET: api/Media
@@ -40,8 +42,20 @@ namespace Iycons_web2._0.Controllers
             return media;
         }
 
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile imageFile)
+        {
+            var imageModel = await _imageStorageService.SaveImage(imageFile);
+
+            if (imageModel != null)
+            {
+                return Ok(new { imagePath = imageModel.FilePath });
+            }
+
+            return BadRequest("Failed to upload the image.");
+        }
         // POST: api/Media
-        [HttpPost]
+        /*[HttpPost]
         public async Task<ActionResult<Media>> CreateMedia(MediaDto mediaDto)
         {
             var media = new Media
@@ -55,7 +69,7 @@ namespace Iycons_web2._0.Controllers
 
             return Ok(media);
         }
-
+        */
         // PUT: api/Media/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMedia(int id, Media media)

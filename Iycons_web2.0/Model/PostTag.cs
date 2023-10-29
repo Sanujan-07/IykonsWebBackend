@@ -6,8 +6,8 @@ namespace Iycons_web2._0.Model
     {
         public int PostId { get; set; }
     
-        public Posts Posts { get; set; }
+        public virtual Posts Posts { get; set; }
         public int TagId { get; set; }
-        public Tag Tags { get; set; }
+        public virtual Tag Tags { get; set; }
     }
 }

@@ -78,3 +78,12 @@ C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\obj\Debug\net
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\AWSSDK.Core.dll
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\AWSSDK.S3.dll
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\AWSSDK.SimpleEmail.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\JetBrains.Annotations.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Nito.AsyncEx.Context.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Nito.AsyncEx.Coordination.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Nito.AsyncEx.Tasks.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Nito.Collections.Deque.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Nito.Disposables.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\System.Linq.Dynamic.Core.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Volo.Abp.Core.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Volo.Abp.Security.dll

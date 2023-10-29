@@ -9,12 +9,12 @@ namespace Iycons_web2._0.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ImageId { get; set; }
-        public string? Filname { get; set; }
-        public string? Path_Name { get; set; }
+        public string? Filename { get; set; }
+       
 
         public int PostId { get; set; }
 
-        
-        public Posts Post { get; set; }
+        public virtual Posts Post { get; set; }
+        public string FilePath { get; internal set; }
     }
 }

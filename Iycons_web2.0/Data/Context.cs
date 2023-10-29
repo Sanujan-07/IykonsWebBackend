@@ -25,6 +25,22 @@ namespace Iycons_web2._0.Data
         {
             base.OnModelCreating(modelBuilder);
 
+
+            // User and Posts (One-to-Many)
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Posts)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserId);
+
+            // Category and Posts (One-to-Many)
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Posts)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId);
+
+            modelBuilder.Entity<PostTag>()
+                .ToTable("Post_Tags");
+            // Posts and Tags (Many-to-Many)
             modelBuilder.Entity<PostTag>()
                 .HasKey(pt => new { pt.PostId, pt.TagId });
 
@@ -38,27 +54,15 @@ namespace Iycons_web2._0.Data
                 .WithMany(t => t.PostTags)
                 .HasForeignKey(pt => pt.TagId);
 
-
             modelBuilder.Entity<Posts>()
-                .HasOne(post => post.Category)
-                .WithMany(category => category.Posts)
-                .HasForeignKey(post => post.CategoryId);
-
-            modelBuilder.Entity<Posts>()
-                .HasOne(p => p.User)
-                .WithMany(u => u.Posts)
-                .HasForeignKey(p => p.UserId);
+                .HasMany(p => p.Comments)
+                .WithOne(c => c.Posts)
+                .HasForeignKey(c => c.PostId);
 
             modelBuilder.Entity<Posts>()
                 .HasMany(p => p.MediaItems)
-                .WithOne(m => m.Posts)
-                .HasForeignKey(m => m.Posts);
-
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.Posts)
-                .WithMany(p => p.Comments)
-                .HasForeignKey(c => c.Posts);
-          
+                .WithOne(m => m.Post)
+                .HasForeignKey(m => m.PostId);
 
         }
     }

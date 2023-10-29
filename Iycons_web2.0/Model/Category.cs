@@ -11,6 +11,5 @@ namespace Iycons_web2._0.Model
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public ICollection<Posts> Posts { get; set; }
-
     }
 }
