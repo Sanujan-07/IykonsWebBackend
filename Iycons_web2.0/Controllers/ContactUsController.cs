@@ -2,6 +2,7 @@
 using Iycons_web2._0.Data;
 using Iycons_web2._0.DTO;
 using Iycons_web2._0.Model;
+using Iycons_web2._0.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -56,7 +57,17 @@ namespace Iycons_web2._0.Controllers
             _context.ContactUs.Add(contactUs);
             await _context.SaveChangesAsync();
 
-            return Ok(contactUs);
+            var emailService = new EmailService(); // You may need to inject this as a service.
+            try
+            {
+                await emailService.SendContactUsEmail(contactUs);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email: {ex.Message}");
+            }
+
+                return Ok(contactUs);
         }
 
         // PUT: api/Feedback/5

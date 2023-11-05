@@ -51,7 +51,7 @@
             },
             "AWSSDK.SimpleEmail": {
               "target": "Package",
-              "version": "[3.7.200.54, )"
+              "version": "[3.7.200.64, )"
             },
             "BCrypt.Net-Next": {
               "target": "Package",
@@ -78,6 +78,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.11, )"
+            },
+            "SlackAPI": {
+              "target": "Package",
+              "version": "[1.1.14, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

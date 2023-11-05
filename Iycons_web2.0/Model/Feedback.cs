@@ -6,7 +6,7 @@ namespace Iycons_web2._0.Model
     public class Feedback
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+     
         public int FeedbackId { get; set; }
         public string? Name { get; set; } = string.Empty;
         public string? Message { get; set; } = string.Empty;

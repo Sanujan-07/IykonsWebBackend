@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Iycons_web2._0.DTO;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using SlackAPI;
+using Microsoft.AspNetCore.Authentication;
+
 
 namespace Iycons_web2._0.Controllers
 {
@@ -20,63 +23,82 @@ namespace Iycons_web2._0.Controllers
         public PostController(Context context )
         {
             _context = context;
-         
-            
+             
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Posts>>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
-        }
+            var posts = await _context.Posts.Include(p => p.Category).Include(p => p.TagPosts).Include(p => p.Comments).Include(p => p.MediaItems).ToListAsync();
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Posts>> GetPost(int id)
-        {
-            var post = await _context.Posts.FindAsync(id);
-
-            if (post == null)
+            if (posts == null)
             {
                 return NotFound();
             }
 
-            return post;
+            return Ok(posts);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PostDetail>> GetPost(int id)
+        {
+            var post = await _context.Posts.FindAsync(id);
+
+            // Get the media for the post, if it exists.
+            var media = await _context.Medias.FindAsync(id);
+
+            // Get the tag for the post, if it exists.
+            var tag = await _context.Tags.FindAsync(id);
+
+            // Get the comment for the post, if it exists.
+            var comment = await _context.Comments.FindAsync(id);
+
+            // Create a new post detail object.
+            var postDetail = new PostDetail
+            {
+                PostId = post.PostId,
+                Posts = post,
+                media = media,
+                Tag = tag,
+                Comment = comment
+            };
+
+            return postDetail;
         }
 
         [HttpPost("create-post")]
-        
+       
         public async Task<ActionResult<Posts>> CreatePost(int categoryId,PostDto post)
         {
-            try
-            {
-                var category = await _context.Categories.FindAsync(categoryId);
-
-                if (category != null)
+            
+            var category = await _context.Categories.FindAsync(categoryId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (category != null )
                 {
-                    var newPost = new Posts
+                
+                var newPost = new Posts
                     {
                         Title = post.Title,
                         Description = post.Description,
-                        CategoryId = category.CategoryId, // Set the foreign key property
+                        CategoryId = categoryId,
+                        UserId = 1,
+                        Category = category
+                        
+                       
                     };
 
                     _context.Posts.Add(newPost);
                     await _context.SaveChangesAsync();
 
-                    return Ok(newPost);
+                    return Ok("Post Created");
                 }
                 else
                 {
                     // Return a 404 (Not Found) response with a specific message
                     return NotFound("Category not found");
                 }
-            }
-           
-            catch (Exception ex)
-            {
-                // Handle other exceptions if needed
-                return StatusCode(500, "Internal Server Error");
-            }
+            
 
         }
 
@@ -128,5 +150,7 @@ namespace Iycons_web2._0.Controllers
         {
             return _context.Posts.Any(e => e.PostId == id);
         }
+
+
     }
 }

@@ -29,7 +29,9 @@ namespace Iycons_web2._0.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories
+               .Include(c => c.Posts) // Include the related Posts
+               .FirstOrDefaultAsync(c => c.CategoryId == id);
 
             if (category == null)
             {

@@ -95,8 +95,8 @@ namespace Iycons_web2._0.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,15 +123,14 @@ namespace Iycons_web2._0.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Commenddate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CommandText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    PostsPostId = table.Column<int>(type: "int", nullable: false)
+                    PostId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_Comments_Posts_PostsPostId",
-                        column: x => x.PostsPostId,
+                        name: "FK_Comments_Posts_PostId",
+                        column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
@@ -144,8 +143,8 @@ namespace Iycons_web2._0.Migrations
                     ImageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Filename = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -159,7 +158,7 @@ namespace Iycons_web2._0.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post_Tags",
+                name: "TagPosts",
                 columns: table => new
                 {
                     PostId = table.Column<int>(type: "int", nullable: false),
@@ -167,15 +166,15 @@ namespace Iycons_web2._0.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Post_Tags", x => new { x.PostId, x.TagId });
+                    table.PrimaryKey("PK_TagPosts", x => new { x.TagId, x.PostId });
                     table.ForeignKey(
-                        name: "FK_Post_Tags_Posts_PostId",
+                        name: "FK_TagPosts_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Post_Tags_Tags_TagId",
+                        name: "FK_TagPosts_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "TagId",
@@ -183,19 +182,14 @@ namespace Iycons_web2._0.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_PostsPostId",
+                name: "IX_Comments_PostId",
                 table: "Comments",
-                column: "PostsPostId");
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medias_PostId",
                 table: "Medias",
                 column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Post_Tags_TagId",
-                table: "Post_Tags",
-                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_CategoryId",
@@ -206,6 +200,11 @@ namespace Iycons_web2._0.Migrations
                 name: "IX_Posts_UserId",
                 table: "Posts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TagPosts_PostId",
+                table: "TagPosts",
+                column: "PostId");
         }
 
         /// <inheritdoc />
@@ -224,7 +223,7 @@ namespace Iycons_web2._0.Migrations
                 name: "Medias");
 
             migrationBuilder.DropTable(
-                name: "Post_Tags");
+                name: "TagPosts");
 
             migrationBuilder.DropTable(
                 name: "Posts");

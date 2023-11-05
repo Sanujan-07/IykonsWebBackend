@@ -4,15 +4,16 @@ using Iycons_web2._0.DTO;
 using Amazon;
 using System.Threading.Tasks;
 using Iycons_web2._0.Model;
+using System.Net;
 
 namespace Iycons_web2._0.Service
 {
     public class EmailService
     {
-        private readonly string sesAccessKey = "YOUR_SES_ACCESS_KEY";
-        private readonly string sesSecretKey = "YOUR_SES_SECRET_KEY";
-        private readonly string senderEmail = "your-sender@example.com"; // Replace with your sender email address
-        private readonly string recipientEmail = "recipient@example.com"; // Replace with the recipient's email address
+        private readonly string sesAccessKey = "AKIA2KJ7MKF27WMURO2Z";
+        private readonly string sesSecretKey = "BCkFISc9T86bg5b0sCd6e9EyfStFmOjSsciX3BGpU/ba";
+        private readonly string senderEmail = "2017icts45 @vau.ac.lk"; // Replace with your sender email address
+        private readonly string recipientEmail = "sammuvel936@gmail.com"; // Replace with the recipient's email address
         /*
         private readonly List<string> recipientEmails = new List<string>
          {
@@ -20,35 +21,36 @@ namespace Iycons_web2._0.Service
             "recipient2@example.com",
             // Add more recipient email addresses as needed
          };*/
-        public void SendFeedbackEmail(FeedbackDto feedback)
+        public async Task SendFeedbackEmail(Feedback feedback)
         {
             // Set up SES client
             var sesClient = new AmazonSimpleEmailServiceClient(
                 sesAccessKey,
                 sesSecretKey,
-                RegionEndpoint.USWest2); // Change the region to your desired AWS region
+                RegionEndpoint.USEast1); // Change the region to your desired AWS region
 
             // Compose and send an email
-            var sendRequest = new SendEmailRequest
-            {
-                Source = senderEmail,
-                Destination = new Destination
-                {
-                    ToAddresses = new List<string> { recipientEmail }
-                },
-                Message = new Message
-                {
-                    Subject = new Content("Feedback Received"),
-                    Body = new Body
-                    {
-                        Html = new Content($"<p>Name: {feedback.Name}</p><p>Email: {feedback.Email}</p><p>Subject: {feedback.Subject}</p><p>Message: {feedback.Message}</p>")
-                    }
-                }
-            };
+           
 
             try
             {
-                var sendResponse = sesClient.SendEmailAsync(sendRequest);
+                var sendRequest = new SendEmailRequest
+                {
+                    Source = senderEmail,
+                    Destination = new Destination
+                    {
+                        ToAddresses = new List<string> { recipientEmail }
+                    },
+                    Message = new Message
+                    {
+                        Subject = new Content("Feedback Received"),
+                        Body = new Body
+                        {
+                            Html = new Content($"<p>Name: {feedback.Name}</p><p>Email: {feedback.Email}</p><p>Subject: {feedback.Subject}</p><p>Message: {feedback.Message}</p><p>Message: {feedback.PageName}</p>")
+                        }
+                    }
+                };
+                await sesClient.SendEmailAsync(sendRequest);
                 Console.WriteLine("Email sent successfully!");
                
             }
@@ -59,7 +61,7 @@ namespace Iycons_web2._0.Service
         }
         public async Task SendContactUsEmail(ContactUs contact)
         {
-            var s3Client = new AmazonSimpleEmailServiceClient(sesAccessKey, sesSecretKey, RegionEndpoint.USWest2); // Change the region to your desired AWS region
+            var s3Client = new AmazonSimpleEmailServiceClient(sesAccessKey, sesSecretKey, RegionEndpoint.USEast1); // Change the region to your desired AWS region
 
             try
             {
@@ -83,9 +85,9 @@ namespace Iycons_web2._0.Service
                     }
                 };
 
-                var response = await s3Client.SendEmailAsync(sendRequest);
+                await s3Client.SendEmailAsync(sendRequest);
                 Console.WriteLine("Email sent successfully!");
-                Console.WriteLine($"Message ID: {response.MessageId}");
+                
             }
             catch (Exception ex)
             {

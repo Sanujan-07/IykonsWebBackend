@@ -7,6 +7,7 @@ using Iycons_web2._0.Data; // Include your data context namespace
 using Iycons_web2._0.Model;
 using Iycons_web2._0.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Iycons_web2._0.Service;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -58,6 +59,8 @@ public class FeedbackController : ControllerBase
 
         _context.Feedbacks.Add(feedback);
         await _context.SaveChangesAsync();
+        var emailService = new EmailService(); // You may need to inject this as a service.
+        await emailService.SendFeedbackEmail(feedback);
 
         return Ok(feedback);
     }

@@ -87,3 +87,5 @@ C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\System.Linq.Dynamic.Core.dll
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Volo.Abp.Core.dll
 C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Volo.Abp.Security.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Sanujan\Desktop\IykonsBackend\Iycons_web2.0\Iycons_web2.0\bin\Debug\net7.0\SlackAPI.dll

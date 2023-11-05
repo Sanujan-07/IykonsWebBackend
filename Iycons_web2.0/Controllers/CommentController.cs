@@ -4,6 +4,7 @@ using Iycons_web2._0.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace Iycons_web2._0.Controllers
 {
@@ -29,11 +30,13 @@ namespace Iycons_web2._0.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _context.Comments
+                .Include(c => c.Posts) // Include the related Post
+                .FirstOrDefaultAsync(c => c.CommentId == id);
 
             if (comment == null)
             {
-                return NotFound();
+                return NotFound("no post available ");
             }
 
             return comment;
@@ -41,13 +44,15 @@ namespace Iycons_web2._0.Controllers
 
         // POST: api/Comment
         [HttpPost]
-        public async Task<ActionResult<Comment>> CreateComment(CommentDto commentDto)
+        public async Task<ActionResult<Comment>> CreateComment(int postId,CommentDto commentDto)
         {
+
             var comment = new Comment
             {
                 CommandText = commentDto.CommandText,
                 Commenddate = commentDto.Commenddate,
-
+                PostId = postId,
+                
             };
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();

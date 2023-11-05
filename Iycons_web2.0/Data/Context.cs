@@ -1,6 +1,8 @@
 ﻿using Iycons_web2._0.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics;
+using System.Reflection.Metadata;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Iycons_web2._0.Data
@@ -18,52 +20,41 @@ namespace Iycons_web2._0.Data
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<PostTag> Post_Tags { get; set; }
-       public DbSet<ContactUs> ContactUs { get; set; }
+        public DbSet<PostTag> TagPosts { get; set; }
+        public DbSet<ContactUs> ContactUs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<PostTag>()
+           .HasKey(tp => new { tp.TagId, tp.PostId });
 
-            // User and Posts (One-to-Many)
+            modelBuilder.Entity<PostTag>()
+                .HasOne(tp => tp.Tag)
+                .WithMany(t => t.TagPosts)
+                .HasForeignKey(tp => tp.TagId);
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(tp => tp.Post)
+                .WithMany(p => p.TagPosts)
+                .HasForeignKey(tp => tp.PostId);
+
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Posts)
-                .WithOne(p => p.User)
-                .HasForeignKey(p => p.UserId);
-
-            // Category and Posts (One-to-Many)
-            modelBuilder.Entity<Category>()
-                .HasMany(c => c.Posts)
-                .WithOne(p => p.Category)
-                .HasForeignKey(p => p.CategoryId);
-
-            modelBuilder.Entity<PostTag>()
-                .ToTable("Post_Tags");
-            // Posts and Tags (Many-to-Many)
-            modelBuilder.Entity<PostTag>()
-                .HasKey(pt => new { pt.PostId, pt.TagId });
-
-            modelBuilder.Entity<PostTag>()
-                .HasOne(pt => pt.Posts)
-                .WithMany(p => p.PostTags)
-                .HasForeignKey(pt => pt.PostId);
-
-            modelBuilder.Entity<PostTag>()
-                .HasOne(pt => pt.Tags)
-                .WithMany(t => t.PostTags)
-                .HasForeignKey(pt => pt.TagId);
+                .WithOne(b => b.User);
 
             modelBuilder.Entity<Posts>()
-                .HasMany(p => p.Comments)
-                .WithOne(c => c.Posts)
-                .HasForeignKey(c => c.PostId);
+                .HasOne(b => b.Category)
+                .WithMany(c => c.Posts);
 
             modelBuilder.Entity<Posts>()
-                .HasMany(p => p.MediaItems)
-                .WithOne(m => m.Post)
-                .HasForeignKey(m => m.PostId);
+                .HasMany(b => b.Comments)
+                .WithOne(c => c.Posts);
 
+            modelBuilder.Entity<Posts>()
+                .HasMany(b => b.MediaItems)
+                .WithOne(m => m.Post);
         }
     }
 }

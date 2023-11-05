@@ -4,6 +4,7 @@ using Iycons_web2._0.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace Iycons_web2._0.Controllers
 {
@@ -29,7 +30,9 @@ namespace Iycons_web2._0.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tag>> GetTag(int id)
         {
-            var tag = await _context.Tags.FindAsync(id);
+            var tag = await _context.Tags
+                .Include(t => t.TagPosts) // Eager load the Posts collection
+                .FirstOrDefaultAsync(t => t.TagId == id);
 
             if (tag == null)
             {
@@ -38,6 +41,7 @@ namespace Iycons_web2._0.Controllers
 
             return tag;
         }
+
         // GET: api/Tag/ByName/{tagName}
         [HttpGet("ByName/{tagName}")]
         public async Task<ActionResult<IEnumerable<Tag>>> GetTagsByName(string tagName)
@@ -54,7 +58,7 @@ namespace Iycons_web2._0.Controllers
 
         // POST: api/Tag
         [HttpPost]
-        public async Task<ActionResult<Tag>> CreateTag(TagDto tagDto)
+        public async Task<ActionResult<Tag>> CreateTag(int postId,TagDto tagDto)
         {
             var tag = new Tag
             {
@@ -63,6 +67,15 @@ namespace Iycons_web2._0.Controllers
             };
 
             _context.Tags.Add(tag);
+
+            var tagPost = new PostTag
+            {
+                PostId = postId,
+                TagId = tag.TagId
+            };
+
+            // Add the new entry to the junction table
+            _context.TagPosts.Add(tagPost);
             await _context.SaveChangesAsync();
 
             return Ok(tag);

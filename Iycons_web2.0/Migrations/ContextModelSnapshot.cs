@@ -55,12 +55,9 @@ namespace Iycons_web2._0.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PostsPostId")
-                        .HasColumnType("int");
-
                     b.HasKey("CommentId");
 
-                    b.HasIndex("PostsPostId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("Comments");
                 });
@@ -148,17 +145,17 @@ namespace Iycons_web2._0.Migrations
 
             modelBuilder.Entity("Iycons_web2._0.Model.PostTag", b =>
                 {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TagId")
                         .HasColumnType("int");
 
-                    b.HasKey("PostId", "TagId");
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("TagId");
+                    b.HasKey("TagId", "PostId");
 
-                    b.ToTable("Post_Tags");
+                    b.HasIndex("PostId");
+
+                    b.ToTable("TagPosts");
                 });
 
             modelBuilder.Entity("Iycons_web2._0.Model.Posts", b =>
@@ -235,7 +232,7 @@ namespace Iycons_web2._0.Migrations
                 {
                     b.HasOne("Iycons_web2._0.Model.Posts", "Posts")
                         .WithMany("Comments")
-                        .HasForeignKey("PostsPostId")
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -255,21 +252,21 @@ namespace Iycons_web2._0.Migrations
 
             modelBuilder.Entity("Iycons_web2._0.Model.PostTag", b =>
                 {
-                    b.HasOne("Iycons_web2._0.Model.Posts", "Posts")
-                        .WithMany("PostTags")
+                    b.HasOne("Iycons_web2._0.Model.Posts", "Post")
+                        .WithMany("TagPosts")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Iycons_web2._0.Model.Tag", "Tags")
-                        .WithMany("PostTags")
+                    b.HasOne("Iycons_web2._0.Model.Tag", "Tag")
+                        .WithMany("TagPosts")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Posts");
+                    b.Navigation("Post");
 
-                    b.Navigation("Tags");
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("Iycons_web2._0.Model.Posts", b =>
@@ -302,12 +299,12 @@ namespace Iycons_web2._0.Migrations
 
                     b.Navigation("MediaItems");
 
-                    b.Navigation("PostTags");
+                    b.Navigation("TagPosts");
                 });
 
             modelBuilder.Entity("Iycons_web2._0.Model.Tag", b =>
                 {
-                    b.Navigation("PostTags");
+                    b.Navigation("TagPosts");
                 });
 
             modelBuilder.Entity("Iycons_web2._0.Model.User", b =>
